@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resume Analyzer | Professional Career Insights</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0f2d4e;
+            --secondary: #1e5f94;
+            --accent: #c8a951;
+            --light: #f5f7fa;
+            --dark: #1a1a2e;
+            --success: #2e8b57;
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ef 100%);
+            color: var(--dark);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(200, 169, 81, 0.3);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo i {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover {
+            background-color: rgba(30, 95, 148, 0.1);
+            color: var(--secondary);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            font-size: 0.9rem;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+        }
+        
+        .btn-outline:hover {
+            background: rgba(30, 95, 148, 0.1);
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 12px rgba(15, 45, 78, 0.15);
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(15, 45, 78, 0.2);
+        }
+        
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 3rem 0;
+        }
+        
+        .hero-content {
+            flex: 1;
+        }
+        
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(15, 45, 78, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            line-height: 1.2;
+        }
+        
+        h1 span {
+            color: var(--accent);
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            color: #555;
+            line-height: 1.6;
+            max-width: 90%;
+        }
+        
+        .upload-section {
+            background: white;
+            border-radius: 12px;
+            padding: 3rem;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(15, 45, 78, 0.05);
+            text-align: center;
+        }
+        
+        .upload-container {
+            border: 2px dashed rgba(30, 95, 148, 0.3);
+            border-radius: 8px;
+            padding: 2.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 2rem 0;
+            background: var(--light);
+            position: relative;
+        }
+        
+        .upload-container:hover {
+            border-color: var(--secondary);
+            background: rgba(245, 247, 250, 0.8);
+        }
+        
+        .upload-container i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+        
+        .upload-container h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .upload-container p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .supported-formats {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: 1rem;
+        }
+        
+        .or-divider {
+            display: flex;
+            align-items: center;
+            margin: 1.5rem 0;
+            color: #999;
+        }
+        
+        .or-divider::before,
+        .or-divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+            margin: 0 1rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            transition: var(--transition);
+            box-shadow: 0 8px 24px rgba(15, 45, 78, 0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(15, 45, 78, 0.1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: rgba(200, 169, 81, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .feature-icon i {
+            font-size: 1.5rem;
+            color: var(--accent);
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .analysis-result {
+            display: none;
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 10px 30px rgba(15, 45, 78, 0.1);
+        }
+        
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .result-header h2 {
+            color: var(--primary);
+        }
+        
+        .score-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+            border: 3px solid var(--accent);
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .stat-card h4 {
+            margin-bottom: 0.5rem;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .stat-card h4 i {
+            color: var(--accent);
+        }
+        
+        .stat-card p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .recommendations {
+            margin-top: 2rem;
+        }
+        
+        .recommendations h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+        
+        .job-cards {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 1rem 0;
+        }
+        
+        .job-card {
+            min-width: 280px;
+            background: var(--light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent);
+            transition: var(--transition);
+        }
+        
+        .job-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(15, 45, 78, 0.1);
+        }
+        
+        .job-card h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .job-card .company {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .match-rate {
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .match-progress {
+            flex: 1;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .match-bar {
+            position: absolute;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+        }
+        
+        .match-percent {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .skills-section {
+            margin-top: 2rem;
+        }
+        
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .skill-tag {
+            background: rgba(30, 95, 148, 0.1);
+            color: var(--secondary);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .skill-tag.highlighted {
+            background: rgba(200, 169, 81, 0.2);
+            color: var(--accent);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding: 2rem 0;
+            color: #888;
+            border-top: 1px solid #eee;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(30, 95, 148, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--accent);
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-content, .hero-image {
+                flex: none;
+                width: 100%;
+            }
+            
+            .hero p {
+                max-width: 100%;
+            }
+            
+            .hero-image {
+                margin-top: 2rem;
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .features {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .logo {
+                margin: 0 auto;
+            }
+            
+            .auth-buttons {
+                margin: 0 auto;
+            }
+        }
+
+        .upload-progress {
+            height: 6px;
+            border-radius: 3px;
+            background: #e9ecef;
+            margin-top: 1rem;
+            position: relative;
+            overflow: hidden;
+            display: none;
+        }
+        
+        .upload-progress-bar {
+            position: absolute;
+            height: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-file-search"></i>
+                <span>ResumeIQ</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">Pricing</a></li>
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-outline">Log In</button>
+                <button class="btn btn-primary">Sign Up</button>
+            </div>
+        </header>
+        
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Transform Your Career with <span>Smart Resume Analysis</span></h1>
+                <p>Upload your resume and get personalized job recommendations powered by advanced AI. Our smart analyzer identifies your strengths and matches you with the perfect career opportunities.</p>
+                <button class="btn btn-primary">Get Started</button>
+            </div>
+            <div class="hero-image">
+                <img src="/api/placeholder/500/360" alt="Resume Analysis Illustration">
+            </div>
+        </section>
+        
+        <section class="upload-section">
+            <h2>Analyze Your Resume</h2>
+            <p>Upload your resume and get instant insights and job recommendations</p>
+            
+            <div class="upload-container" id="upload-area">
+                <i class="fas fa-file-upload"></i>
+                <h3>Upload Your Resume</h3>
+                <p>Drag and drop your file here, or click to browse</p>
+                <input type="file" class="file-input" id="resume-upload" accept=".pdf,.doc,.docx">
+                <div class="upload-progress">
+                    <div class="upload-progress-bar"></div>
+                </div>
+                <p class="supported-formats">Supported formats: PDF, DOCX, DOC</p>
+            </div>
+            
+            <div class="or-divider">or</div>
+            
+            <button class="btn btn-primary" id="sample-resume-btn">Use Sample Resume</button>
+        </section>
+        
+        <div class="loading" id="loading-area">
+            <div class="spinner"></div>
+            <h3>Analyzing Your Resume</h3>
+            <p>We're extracting skills, experience, and finding the best matches...</p>
+        </div>
+        
+        <section class="analysis-result" id="result-area">
+            <div class="result-header">
+                <h2>Resume Analysis Results</h2>
+                <div class="score-circle">86%</div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4><i class="fas fa-briefcase"></i> Experience Level</h4>
+                    <p>Mid-Senior (5-7 years)</p>
+                </div>
+                <div class="stat-card">
+                    <h4><i class="fas fa-industry"></i> Industry Focus</h4>
+                    <p>Technology & Software</p>
+                </div>
+                <div class="stat-card">
+                    <h4><i class="fas fa-graduation-cap"></i> Education</h4>
+                    <p>Bachelor's Degree (Computer Science)</p>
+                </div>
+                <div class="stat-card">
+                    <h4><i class="fas fa-code-branch"></i> Technical Skills</h4>
+                    <p>25 skills identified</p>
+                </div>
+                <div class="stat-card">
+                    <h4><i class="fas fa-users"></i> Soft Skills</h4>
+                    <p>12 skills identified</p>
+                </div>
+                <div class="stat-card">
+                    <h4><i class="fas fa-chart-line"></i> Growth Potential</h4>
+                    <p>High (8.5/10)</p>
+                </div>
+            </div>
+            
+            <div class="recommendations">
+                <h3>Recommended Job Roles</h3>
+                <div class="job-cards">
+                    <div class="job-card">
+                        <h4>Senior Frontend Developer</h4>
+                        <div class="company"><i class="fas fa-building"></i> Various Companies</div>
+                        <p>Your experience with React, Vue, and modern JavaScript frameworks makes you an excellent match for senior frontend roles.</p>
+                        <div class="match-rate">
+                            <div class="match-progress">
+                                <div class="match-bar" style="width: 95%"></div>
+                            </div>
+                            <span class="match-percent">95%</span>
+                        </div>
+                    </div>
+                    <div class="job-card">
+                        <h4>Full Stack Developer</h4>
+                        <div class="company"><i class="fas fa-building"></i> Various Companies</div>
+                        <p>Your combined frontend and backend skills position you well for full stack development positions.</p>
+                        <div class="match-rate">
+                            <div class="match-progress">
+                                <div class="match-bar" style="width: 88%"></div>
+                            </div>
+                            <span class="match-percent">88%</span>
+                        </div>
+                    </div>
+                    <div class="job-card">
+                        <h4>UI/UX Developer</h4>
+                        <div class="company"><i class="fas fa-building"></i> Various Companies</div>
+                        <p>Your frontend expertise combined with design sensibilities make you suitable for UI/UX developer roles.</p>
+                        <div class="match-rate">
+                            <div class="match-progress">
+                                <div class="match-bar" style="width: 82%"></div>
+                            </div>
+                            <span class="match-percent">82%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="skills-section">
+                <h3>Skills Analysis</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag highlighted">JavaScript</span>
+                    <span class="skill-tag highlighted">React</span>
+                    <span class="skill-tag highlighted">TypeScript</span>
+                    <span class="skill-tag highlighted">Node.js</span>
+                    <span class="skill-tag">CSS3</span>
+                    <span class="skill-tag">HTML5</span>
+                    <span class="skill-tag">Vue.js</span>
+                    <span class="skill-tag">Redux</span>
+                    <span class="skill-tag">GraphQL</span>
+                    <span class="skill-tag">REST APIs</span>
+                    <span class="skill-tag">Git</span>
+                    <span class="skill-tag">Agile</span>
+                    <span class="skill-tag">Webpack</span>
+                    <span class="skill-tag">Jest</span>
+                    <span class="skill-tag">CI/CD</span>
+                    <span class="skill-tag">Docker</span>
+                </div>
+            </div>
+            
+            <div class="recommendations">
+                <h3>Skills to Acquire</h3>
+                <div class="skills-grid">
+                    <span class="skill-tag">Next.js</span>
+                    <span class="skill-tag">AWS</span>
+                    <span class="skill-tag">Tailwind CSS</span>
+                    <span class="skill-tag">TypeScript (Advanced)</span>
+                    <span class="skill-tag">React Native</span>
+                </div>
+            </div>
+        </section>
+        
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-search"></i>
+                </div>
+                <h3>Smart Skill Detection</h3>
+                <p>Our AI engine automatically extracts and analyzes your skills, experience, and qualifications from your resume with high accuracy.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h3>Job Role Matching</h3>
+                <p>Get personalized job role recommendations based on your unique skill set and experience that align with current market demands.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-pie"></i>
+                </div>
+                <h3>Comprehensive Analysis</h3>
+                <p>Receive detailed insights into your professional profile with strengths, improvement areas, and career growth opportunities.</p>
+            </div>
+        </section>
+        
+        <footer>
+            <p>&copy; 2025 ResumeIQ. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const uploadArea = document.getElementById('upload-area');
+            const fileInput = document.getElementById('resume-upload');
+            const loadingArea = document.getElementById('loading-area');
+            const resultArea = document.getElementById('result-area');
+            const sampleResumeBtn = document.getElementById('sample-resume-btn');
+            const uploadProgress = document.querySelector('.upload-progress');
+            const uploadProgressBar = document.querySelector('.upload-progress-bar');
+            
+            // Handle drag and drop
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'var(--accent)';
+                uploadArea.style.background = 'rgba(245, 247, 250, 0.8)';
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                uploadArea.style.borderColor = 'rgba(30, 95, 148, 0.3)';
+                uploadArea.style.background = 'var(--light)';
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = 'rgba(30, 95, 148, 0.3)';
+                uploadArea.style.background = 'var(--light)';
+                
+                const file = e.dataTransfer.files[0];
+                if (file && isValidFile(file)) {
+                    processFile(file);
+                } else {
+                    alert('Please upload a PDF, DOC, or DOCX file.');
+                }
+            });
+            
+            // Handle file input change
+            fileInput.addEventListener('change', function() {
+                const file = fileInput.files[0];
+                if (file && isValidFile(file)) {
+                    processFile(file);
+                } else {
+                    alert('Please upload a PDF, DOC, or DOCX file.');
+                }
+            });
+            
+            // Handle sample resume button
+            sampleResumeBtn.addEventListener('click', function() {
+                loadingArea.style.display = 'block';
+                
+                // Simulate processing delay
+                setTimeout(function() {
+                    loadingArea.style.display = 'none';
+                    resultArea.style.display = 'block';
+                    
+                    // Scroll to results
+                    resultArea.scrollIntoView({ behavior: 'smooth' });
+                }, 2000);
+            });
+            
+            // Check if file is valid
+            function isValidFile(file) {
+                const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                return validTypes.includes(file.type);
+            }
+            
+            // Process uploaded file
+            function processFile(file) {
+                // Show progress bar
+                uploadProgress.style.display = 'block';
+                
+                // Simulate upload progress
+                let progress = 0;
+                const progressInterval = setInterval(function() {
+                    progress += 5;
+                    uploadProgressBar.style.width = progress + '%';
+                    
+                    if (progress >= 100) {
+                        clearInterval(progressInterval);
+                        
+                        // Hide upload progress
+                        setTimeout(function() {
+                            uploadProgress.style.display = 'none';
+                            
+                            // Show loading animation
+                            loadingArea.style.display = 'block';
+                            
+                            // Simulate analysis delay
+                            setTimeout(function() {
+                                loadingArea.style.display = 'none';
+                                resultArea.style.display = 'block';
+                                
+                                // Scroll to results
+                                resultArea.scrollIntoView({ behavior: 'smooth' });
+                            }, 2000);
+                        }, 500);
+                    }
+                }, 100);
+            }
+            
+            // Add animation to skill tags
+            const skillTags = document.querySelectorAll('.skill-tag');
+            skillTags.forEach(tag => {
+                tag.addEventListener('mouseover', function() {
+                    this.style.transform = 'translateY(-3px)';
+                    this.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+                });
+                
+                tag.addEventListener('mouseout', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+            
+            // Make "Get Started" button scroll to upload section
+            const getStartedBtn = document.querySelector('.hero .btn-primary');
+            getStartedBtn.addEventListener('click', function() {
+                document.querySelector('.upload-section').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
